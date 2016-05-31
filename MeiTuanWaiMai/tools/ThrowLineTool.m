@@ -31,7 +31,19 @@ static ThrowLineTool *s_sharedInstance = nil;
     self.showingView = obj;
     UIBezierPath *path= [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(start.x, start.y)];
-    [path addQuadCurveToPoint:CGPointMake(end.x+25,  end.y+25) controlPoint:CGPointMake(start.x - 180, start.y - 200)];
+    /*
+     //画二元曲线，一般和moveToPoint配合使用
+     - (void)addQuadCurveToPoint:(CGPoint)endPoint controlPoint:(CGPoint)controlPoint
+     参数：
+     endPoint:曲线的终点
+     controlPoint:画曲线的基准点
+     */
+//    [path addQuadCurveToPoint:CGPointMake(end.x+25,  end.y+25) controlPoint:CGPointMake(start.x - 180, start.y - 200)];
+//
+    
+    [path addQuadCurveToPoint:CGPointMake(end.x+25,  end.y+25) controlPoint:CGPointMake(start.x, start.y)];
+    
+
     [self groupAnimation:path];
 }
 
@@ -42,12 +54,13 @@ static ThrowLineTool *s_sharedInstance = nil;
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     animation.path = path.CGPath;
     animation.rotationMode = kCAAnimationRotateAuto;
+    //
     CABasicAnimation *expandAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     expandAnimation.duration = 0.5f;
     expandAnimation.fromValue = [NSNumber numberWithFloat:1];
     expandAnimation.toValue = [NSNumber numberWithFloat:1.0f];
     expandAnimation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    
+    //
     CABasicAnimation *narrowAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     narrowAnimation.beginTime = 0.5;
     narrowAnimation.fromValue = [NSNumber numberWithFloat:1.0f];
@@ -55,7 +68,7 @@ static ThrowLineTool *s_sharedInstance = nil;
     narrowAnimation.toValue = [NSNumber numberWithFloat:1.0f];
     
     narrowAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    
+    //
     CAAnimationGroup *groups = [CAAnimationGroup animation];
     groups.animations = @[animation,expandAnimation,narrowAnimation];
     groups.duration = 0.8f;

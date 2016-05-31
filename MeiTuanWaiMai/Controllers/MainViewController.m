@@ -11,6 +11,7 @@
 #import "MainTableViewCell.h"
 #import "ViewModel.h"
 #import "GoodsListView.h"
+
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,ThrowLineToolDelegate>
 
 @end
